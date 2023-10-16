@@ -8,15 +8,15 @@ import { FinalCalcTable, IFinalCalcTable } from '../FinalCalcTable';
 //import styles from './calcforfriends.css';
 
 const orderListInit: Array<IOrder> = []
-const eatensInit: Array<string> = []
-const foodsInit: Array<IFoods> = []
+const uniqueFriendsInit: Array<string> = []
+const uniqueFoodsInit: Array<IFoods> = []
 const foodEatenInit: Array<IEaten> = [];
 const finalCalcInit: Array<IFinalCalcTable> = [];
 
 export function CalcForFriends() {
   const [orderList, setOrderList] = React.useState(orderListInit);
-  const [uniqueFriends, setUniqueFriends] = React.useState(eatensInit);
-  const [uniqueFoods, setUniqueFoods] = React.useState(foodsInit);
+  const [uniqueFriends, setUniqueFriends] = React.useState(uniqueFriendsInit);
+  const [uniqueFoods, setUniqueFoods] = React.useState(uniqueFoodsInit);
   const [foodEaten, setFoodEaten] = React.useState(foodEatenInit);
   const [finalCalc, setFinalCalc] = React.useState(finalCalcInit);
   const orderByFriend = (a: IEaten, b: IEaten) => a.friend < b.friend ? -1 : (a.friend > b.friend ? 1 : 0);
@@ -85,7 +85,6 @@ export function CalcForFriends() {
         foods={uniqueFoods}
         foodEaten={foodEaten}
         checkCallback={(eaten: { friend: string, checked: { [key: string]: boolean } }, food: IFoods) => {
-          console.log('food.name', food.name, 'eaten.friend', eaten.friend);
           const newEaten = foodEaten.filter(e => eaten.friend === e.friend)[0];
           newEaten.checked[`"${food.id}"`] = !eaten.checked[`"${food.id}"`];
           setFoodEaten(
