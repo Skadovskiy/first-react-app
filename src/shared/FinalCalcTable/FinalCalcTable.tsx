@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import IState from '../../store/IState';
 // import styles from './finalcalctable.css';
 
 export interface IFinalCalcTable {
@@ -7,12 +9,9 @@ export interface IFinalCalcTable {
   HowMany: number
 }
 
+export function FinalCalcTable() {
+  const finalCalc = useSelector((state: IState) => state.finalCalc);
 
-export interface IFinalCalcTableProps {
-  finalCalc: Array<IFinalCalcTable>
-}
-
-export function FinalCalcTable({finalCalc}: IFinalCalcTableProps) {
   return (
     <div className="container">
       <h1 className="title">Таблица итогового расчёта</h1>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToDoList } from './shared/ToDoList';
+//import { ToDoList } from './shared/ToDoList';
 import { CalcForFriends } from './shared/CalcForFriends';
 
 function App() {
