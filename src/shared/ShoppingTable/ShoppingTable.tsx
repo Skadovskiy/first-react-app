@@ -1,16 +1,18 @@
 import React from 'react';
+import { Dispatch } from "redux";
 import { IOrder, Order } from '../Order';
 import { NewOrder } from '../NewOrder';
-import { generateId } from '../../utils/generateRandomIndex';
+import { generateId, generateRandomString } from '../../utils/generateRandomIndex';
+import { bindActionCreators } from '@reduxjs/toolkit';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import IState from '../../store/IState';
+import { setOrderList } from '../../store/state';
 //import styles from './shoppingtable.css';
 
-export interface IShoppingTableProps {
-  deleteCallback: (key: string) => () => void
-  createCallback: (order: IOrder) => void
-  orderList: Array<IOrder>
-}
-
-export function ShoppingTable({deleteCallback, createCallback, orderList} : IShoppingTableProps) {
+export function ShoppingTable() {
+  const orderList = useSelector((state: IState) => state.orderList);
+  const dispatch = useDispatch();
+  
   return (
     <div className="container">
       <h1 className="title">Таблица покупок</h1>
@@ -32,9 +34,10 @@ export function ShoppingTable({deleteCallback, createCallback, orderList} : ISho
                 <Order
                   key={order.id}
                   order={order}
-                  deleteCallback={deleteCallback(order.id)} />)
+                  deleteCallback={() => dispatch(setOrderList(orderList.filter((f) => f.id !== order.id)))} 
+                  />)
           }
-          {<NewOrder createCallback={createCallback} />}
+          {<NewOrder createCallback={(order: IOrder) => dispatch(setOrderList([...orderList, {...order, id: generateRandomString()}])) } />}
         </tbody>
       </table>
     </div>
